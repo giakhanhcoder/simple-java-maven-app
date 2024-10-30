@@ -29,7 +29,7 @@ pipeline {
                 subject: "Build SUCCESS: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
                 body: "Xây dựng thành công!\n\nBranch: ${env.BRANCH_NAME}\nXem chi tiết tại: ${env.BUILD_URL}",
                 from: 'giakhanh27403@gmail.com'
-                to: 'giakhanh27403@gmail.com', 'khanhvghe170815@fpt.edu.vn'
+                to: 'giakhanh27403@gmail.com, khanhvghe170815@fpt.edu.vn'
             )
         }
         failure {
