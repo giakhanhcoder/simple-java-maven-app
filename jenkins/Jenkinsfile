@@ -22,7 +22,8 @@ pipeline {
                 sh './jenkins/scripts/deliver.sh'
             }
         }
-          post {
+    }
+    post {
         success {
             emailext(
                 subject: "Build SUCCESS: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
@@ -37,6 +38,5 @@ pipeline {
                 to: 'your_email@example.com'
             )
         }
-    }
     }
 }
