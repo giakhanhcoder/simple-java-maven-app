@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh "sed -i 's/3.9.2/3.8.7/g' pom.xml"
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('Deliver') {
+            steps {
+                sh './jenkins/scripts/deliver.sh'
+            }
+        }
+    }
+    post {
+        success {
+            emailext(
+                subject: "Build SUCCESS: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                body: "Xây dựng thành công!\n\nBranch: ${env.BRANCH_NAME}\nXem chi tiết tại: ${env.BUILD_URL}",
+                from: 'giakhanh27403@gmail.com',
+                to: 'giakhanh27403@gmail.com, khanhvghe170815@fpt.edu.vn'
+            )
+        }
+        failure {
+            emailext(
+                subject: "Build FAILURE: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                body: "Xây dựng thất bại!\n\nBranch: ${env.BRANCH_NAME}\nXem chi tiết tại: ${env.BUILD_URL}",
+                from: 'giakhanh27403@gmail.com',
+                to: 'giakhanh27403@gmail.com, khanhvghe170815@fpt.edu.vn'
+            )
+        }
+    }
+}
