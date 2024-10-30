@@ -28,14 +28,14 @@ pipeline {
             emailext(
                 subject: "Build SUCCESS: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
                 body: "Xây dựng thành công!\n\nBranch: ${env.BRANCH_NAME}\nXem chi tiết tại: ${env.BUILD_URL}",
-                to: 'your_email@example.com'
+                to: 'giakhanh27403@gmail.com'
             )
         }
         failure {
             emailext(
                 subject: "Build FAILURE: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
                 body: "Xây dựng thất bại!\n\nBranch: ${env.BRANCH_NAME}\nXem chi tiết tại: ${env.BUILD_URL}",
-                to: 'your_email@example.com'
+                to: 'giakhanh27403@gmail.com'
             )
         }
     }
