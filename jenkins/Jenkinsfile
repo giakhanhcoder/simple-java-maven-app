@@ -22,10 +22,21 @@ pipeline {
                 sh './jenkins/scripts/deliver.sh'
             }
         }
-        post{
-            success{
-                emailext body: 'Email send from Jenkins', subject: 'Test Email', to: 'giakhanh27403@gmail.com'
-            }
+          post {
+        success {
+            emailext(
+                subject: "Build SUCCESS: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                body: "Xây dựng thành công!\n\nBranch: ${env.BRANCH_NAME}\nXem chi tiết tại: ${env.BUILD_URL}",
+                to: 'your_email@example.com'
+            )
         }
+        failure {
+            emailext(
+                subject: "Build FAILURE: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                body: "Xây dựng thất bại!\n\nBranch: ${env.BRANCH_NAME}\nXem chi tiết tại: ${env.BUILD_URL}",
+                to: 'your_email@example.com'
+            )
+        }
+    }
     }
 }
